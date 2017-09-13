@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cart</title>
+
+    <link rel="stylesheet" href="verder/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="verder/alert/popup.min.css">
+    <script src="verder/alert/popup.min.js"></script>
+</head>
+
+<body>
+
+<div class="container" ng-app="cartapp" ng-controller="cartController">
+
+    <p ng-show="!cart.length">服务车为空</p>
+    <table class="table" ng-show="cart.length" ng-cloak="">
+       <thead>
+       <tr>
+           <th>
+               <label class="checkbox-inline">
+                   <input type="checkbox" class="selectAll" id="inlineCheckbox1" value="option1" ng-click="checkAll()">全选
+               </label>
+           </th>
+           <th>产品编号</th>
+           <th>产品名字</th>
+           <th>购买数量</th>
+           <th>产品单价</th>
+           <th>产品总价</th>
+           <th>操作</th>
+       </tr>
+       </thead>
+
+        <tbody>
+        <tr ng-repeat="item in cart">
+            <td>
+                <label class="checkbox-inline">
+                    <input type="checkbox" class="selectItem" id="inlineCheckbox1" ng-checked="item.isChecked" ng-click="checkClick(item.id)">
+                </label>
+            </td>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>
+                <button type="button" class="btn btn-info" ng-click="reduced(item.id)">-</button>
+                <input type="tel" ng-model="item.quality" value="{{item.quality}}">
+                <button type="button" class="btn btn-info" ng-click="add(item.id)">+</button>
+            </td>
+            <td>{{item.price}}</td>
+            <td>{{(item.quality*item.price|currency:"RMB ￥ ")}}</td>
+            <td><button type="button" class="btn btn-danger" ng-click="delete(item.id)">删除</button></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>总购买价格</td>
+            <td>{{totalPrice()|currency:"RMB ￥ "}}</td>
+            <td>总购买数量  {{totalCount()}}</td>
+            <td></td>
+            <!--合并单元格colspan="2"-->
+            <td>
+                <button type="button" class="btn btn-warning" ng-click="cart = {}">清空购物车</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-success" ng-click="pay()">去结算</button>
+            </td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+<!--<script src='//kefu.easemob.com/webim/easemob.js?configId=36dad46f-b546-4cf3-8ed2-ab055dd3ed64'></script>-->
+<script src="verder/angular/angular.js"></script>
+<script src="js/cart.js"></script>
+
+</body>
+</html>
